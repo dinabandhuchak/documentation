@@ -1,0 +1,1 @@
+This is a playbook about best practices for investigation what might have caused the article did not matched(`onclusive.delivery.event.content.matched`) by the **Content Service** 
