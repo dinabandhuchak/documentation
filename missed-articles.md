@@ -11,7 +11,13 @@ This is a playbook about best practices for investigation what might have caused
     Visit the **account** page of the client in [**Client Brief**](https://client-brief.platform.onclusive.org/). From the ticket determine the section and the query attach to it was suppose to match the article(s). Nativate to the query page of the attached query by clicking the _"Edit"_ button in the popup when clicked on the _3 dots_ icon for the query.
     ![account_page_section_tab_screenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20094048.png)
     ![attached_query_page_schreenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20094126.png)
-
+    First, **result** tab on the **query** page and pick out the date range from the date picker at the top. It should match the reported date of the match. Verify in the results that the missed matched articles is present.
+    ![query_page_result_tab_screenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20095031.png)
+    (_in the screenshot we can the article(higlighted) is present for the date_)
+    
+    Second, check the history of the query. If it has been alter after the date of the match. If the history has changed after the date of match. which would mean that for the match the query was different, for which the article did not match. And for the current query the articles are matching.
+    ![query_page_history_tab_screenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20095123.png)
+    (_in the schreentshot, we can see the query was not sicne the januagre of 2025 which means the query was same for match_)
 3. 
 
 ---
