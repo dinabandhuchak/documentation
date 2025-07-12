@@ -21,8 +21,28 @@ This is a playbook about best practices for investigation what might have caused
 3. **Investigate mediafilters**
     Visit the **account** page of the client in  [**Client Brief**](https://client-brief.platform.onclusive.org/). Navigate to _Media Filters_ tab, observe if there any media filter(s) attacch to the account. If media filter present then navigate to media filter's page by clicking _"Edit"_ button in the _popup_ on clinking _3 dots_ against the media filter.
     ![account_page_mediafilter_tab_scheenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20101107.png)
+    
+    On the media filter page, click on the **"History"** tab and determine if the publication was changed after the matched date. If it has been changed that would means previous filter might have filters out the article on the **Content Service** on procesing the query on the match day.
+    ![medialist_page_history_tab_screenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20102020.png)
+    (_In the screenshot, we can see in the history tab the media list was last changed on Feberary 2025 which means that it had not affected the query_)
+    
+    **Note: The same can be applied ot the section level. meaning if a section has any _media fitlers_ attached to it then it could affect the query. Hence, the process of determination same as above for the section**
 4.  **Investigate account history**
-    ![account_page_history_tab_screenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20101146.png)
+    Visit the **account** page of the client in  [**Client Brief**](https://client-brief.platform.onclusive.org/). Many times change of account's configuration effect the query processing for the day. For example, if the section had not had the mention query for which the article should match, attached to it on the day of mathc. Then it would not have matched. To determine such cases we can navigate to the history tab and observe if any confiuration has been since the match day.
+    ![account_page_history_tab_screenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20103444.png)
+    (_In the screenshot, we can that the account **WILL AID** section(query attached section) last updated(_12-06-2025_) before the match date(_16-06-2025_)_)
+
+
+
+> **📌 Note:**
+> The screenshots in this document use values from a specific support ticket for illustration purposes. Please substitute these with relevant values from the ticket you're investigating.
+>
+> **Example Ticket Details Used:**
+> • Ticket: [THD-11523](https://onclusive.atlassian.net/browse/THD-11523)
+> • `brief_id`: `8548`
+> • `article_id`: `5689315c48f8e8710804a6a11ef1802011ce71fe1ee7f8f39bf26f74ddc299cf`
+> • `title`: *Edinburgh law firm raises £3,090 in charity Will-writing campaign*
+> • `date`: `16-06-2025`
 
 ---
 
