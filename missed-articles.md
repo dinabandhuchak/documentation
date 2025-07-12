@@ -23,7 +23,6 @@ This is a playbook about best practices for investigation what might have caused
     ![account_page_mediafilter_tab_scheenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20101107.png)
 4.  **Investigate account history**
     ![account_page_history_tab_screenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20101146.png)
-5.  
 
 ---
 
