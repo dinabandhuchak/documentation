@@ -6,6 +6,7 @@ This is a playbook about best practices for investigation what might have caused
 
 1. **Verify that the event not present**
     Visit the _Admin Tool_'s [**Article Finder**](https://client-brief.platform.onclusive.org/admin/find-article) page. In the filter input the article's `id` and `briref id`(_account id_). Select **matched**(`onclusive.delivery.event.content.matched`) from the event dropdown and pick the **Start Date** which should be the expected delivered date(One thing to note, somethimes match might happend a day before. so, check of the previous date too). Then click on the filter button, no articles should be there on the results table.
+    ![aritcle_finder_screenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20092916.png)
 2. **Investiagte the query**
     
 3. 
