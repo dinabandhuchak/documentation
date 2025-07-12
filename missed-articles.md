@@ -18,7 +18,12 @@ This is a playbook about best practices for investigation what might have caused
     Second, check the history of the query. If it has been alter after the date of the match. If the history has changed after the date of match. which would mean that for the match the query was different, for which the article did not match. And for the current query the articles are matching.
     ![query_page_history_tab_screenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20095123.png)
     (_in the schreentshot, we can see the query was not sicne the januagre of 2025 which means the query was same for match_)
-3. 
+3. **Investigate mediafilters**
+    Visit the **account** page of the client in  [**Client Brief**](https://client-brief.platform.onclusive.org/). Navigate to _Media Filters_ tab, observe if there any media filter(s) attacch to the account. If media filter present then navigate to media filter's page by clicking _"Edit"_ button in the _popup_ on clinking _3 dots_ against the media filter.
+    ![account_page_mediafilter_tab_scheenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20101107.png)
+4.  **Investigate account history**
+    ![account_page_history_tab_screenshot](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20101146.png)
+5.  
 
 ---
 
