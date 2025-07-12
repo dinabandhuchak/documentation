@@ -5,7 +5,7 @@ This is a playbook about best practices for investigation what might have caused
 ## Steps to investigate the missing **matched**(`onclusive.delivery.event.content.matched`) event
 
 1. **Verify that the event event not present**
-    Visit the _Admin Tool_'s **Article Finder** page
+    Visit the _Admin Tool_'s [**Article Finder**](https://client-brief.platform.onclusive.org/admin/find-article) page. In the filter input the article's `id` and `briref id`(_account id_). Select **matched**(`onclusive.delivery.event.content.matched`) from the event dropdown and pick the **Start Date** which should be the expected delivered date(One thing to note, somethimes match might happend a day before. so, check of the previous date too). Then click on the filter button, no articles should be there on the results table.
 2. 
 
 ---
