@@ -1,149 +1,112 @@
-# Debian WSL Development Setup Notes
+## Investigating Missing **Matched** (`onclusive.delivery.event.content.matched`) Events in Content Service
 
-## Goal
+This playbook outlines best practices for investigating cases where an article did **not** generate a `matched` (`onclusive.delivery.event.content.matched`) event from the **Content Service**.
+There have been multiple support tickets regarding this issue. The typical summary of such tickets is:
 
-A robust local development environment within Debian WSL for Ruby on Rails projects (Ruby 3.4.3), Node.js (LTS), Git for version control, and Docker Compose for containerization.
+> The client reports that certain article(s) were not delivered, even though those articles appear in the results of the query configured for them in the [**Query Tool**](https://querytool.platform.onclusive.org).
 
-## Prerequisites
+---
 
-  * **Windows Subsystem for Linux (WSL) 2** enabled.
-  * **Debian** distribution installed in WSL.
-  * **(Recommended)** **Docker Desktop for Windows** installed with WSL 2 integration enabled for your Debian instance.
+### 📌 Note:
 
-## Setup Steps
+The screenshots in this document use values from a specific support ticket for illustration purposes. Please substitute these with relevant values from the ticket you're investigating.
 
-### 1\. System Update & Essential Tools
+**Example Ticket Details Used:**
 
-Always start by updating your package lists and upgrading existing packages. Install fundamental tools needed for development.
+* Ticket: [THD-11523](https://onclusive.atlassian.net/browse/THD-11523)
+* `brief_id`: `8548`
+* `article_id`: `5689315c48f8e8710804a6a11ef1802011ce71fe1ee7f8f39bf26f74ddc299cf`
+* `title`: *Edinburgh law firm raises £3,090 in charity Will-writing campaign*
+* `date`: `16-06-2025`
 
-```bash
-sudo apt update && sudo apt upgrade -y
-sudo apt install build-essential curl gnupg2 zsh git -y
-```
+---
 
-### 2\. Oh-My-Zsh (Optional, but Highly Recommended)
+## Steps to Investigate Missing Matched Event
 
-Enhance your terminal experience with Zsh and Oh-My-Zsh's themes and plugins.
+### 1. **Verify that the event is not present**
 
-1.  **Set Zsh as Default Shell (if not already):**
+Visit the *Admin Tool's* [**Article Finder**](https://client-brief.platform.onclusive.org/admin/find-article) page.
+Use the filters to input the article's `id` and `brief_id` (*account id*).
+Select the **matched** (`onclusive.delivery.event.content.matched`) event from the dropdown and set the **Start Date** to the expected delivery date.
 
-    ```bash
-    chsh -s $(which zsh) # Then close and reopen your terminal
-    ```
+> 🔍 *Note:* Sometimes the match might have occurred a day earlier — be sure to check the previous date as well.
 
-2.  **Install Oh-My-Zsh:**
+Then click the **Filter** button. There should be **no results** for the article if the matched event truly didn't happen.
 
-    ```bash
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    ```
+![Article Finder](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20092916.png)
 
-3.  **Install Common Plugins (e.g., autosuggestions, syntax-highlighting):**
+---
 
-    ```bash
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    ```
+### 2. **Investigate the query**
 
-    Then, edit your `~/.zshrc` file. Find the `plugins=(git)` line and add the desired plugins:
+Visit the **Client Brief** [**Account Page**](https://client-brief.platform.onclusive.org/).
+From the ticket, identify the relevant section and the query that was supposed to match the article.
 
-    ```bash
-    # Example .zshrc plugins line
-    plugins=(git zsh-autosuggestions zsh-syntax-highlighting npm node)
-    ```
+Navigate to the query's detail page by clicking **Edit** on the 3-dot menu next to the query.
 
-    After editing, save and `source ~/.zshrc` or open a new terminal.
+![Account Section](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20094048.png)
+![Query Edit Page](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20094126.png)
 
+**First**, go to the **Results** tab on the query page.
+Set the date picker to the match date and verify that the article in question is present in the results.
 
-### 3\. Git Configuration
+![Query Results](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20095031.png)
 
-Set up your global Git user name and email.
+*(In the screenshot above, the article is highlighted and visible in the results for the date)*
 
-```bash
-git config --global user.name "your_username"
-git config --global user.email "your_email@example.com"
-```
+**Second**, check the **History** tab of the query.
+If the query was modified **after** the match date, it might mean the article didn’t match the **original** version of the query, even though it does match the **current** version.
 
-### 3\. Ruby Setup (RVM)
+![Query History](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20095123.png)
 
-Install RVM to manage Ruby versions, then install the specific Ruby version for your project.
+*(In the screenshot above, the query hasn’t been changed since January 2025, so it’s likely the same as it was on the match date.)*
 
-1.  **Install RVM Prerequisites:**
-    (Libraries required for Ruby compilation and various gems)
+---
 
-    ```bash
-    sudo apt install libssl-dev libreadline-dev zlib1g-dev libcurl4-openssl-dev libsqlite3-dev libyaml-dev libffi-dev libgdbm-dev libncurses5-dev automake libtool bison -y
-    ```
+### 3. **Investigate Media Filters**
 
-2.  **Import RVM Keys:**
+Go to the **Media Filters** tab of the account on the [**Client Brief**](https://client-brief.platform.onclusive.org/) page.
+If media filters are attached, click **Edit** on the 3-dot menu next to the filter to open the filter’s configuration.
 
-    ```bash
-    gpg --keyserver hkps://keys.openpgp.org --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-    ```
+![Media Filter Tab](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20101107.png)
 
-3.  **Install RVM:**
+On the media filter page, click the **History** tab.
+Check whether the publication list was changed **after** the match date.
 
-    ```bash
-    \curl -sSL https://get.rvm.io | bash -s stable
-    source ~/.rvm/scripts/rvm # Or close/reopen your terminal
-    ```
+> 🔍 *Note:* If the filter was changed after the match date, it’s possible the **previous version** of the media filter excluded the article — and therefore it was filtered out during processing.
 
-4.  **Install Ruby 3.4.3 & Bundler:**
-    (Set Ruby 3.4.3 as your default for new terminal sessions)
+![Media Filter History](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20102020.png)
 
-    ```bash
-    rvm install 3.4.3
-    rvm use 3.4.3 --default
-    gem install bundler
-    ```
+*(In the screenshot, the media list was last changed in February 2025 — so it did not affect the match on 16-06-2025.)*
 
-### 4\. Node.js Setup (NVM)
+> 🛈 **Tip:** The same applies to section-level media filters. If the section had a filter attached at the time, it could have influenced whether the article matched. Use the same process to check history at the section level.
 
-Use NVM to install and manage Node.js versions, which is crucial for modern Rails front-end assets.
+---
 
-1.  **Install NVM:**
+### 4. **Investigate Account History**
 
-    ```bash
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-    source ~/.zshrc # Or ~/.bashrc if you're not using Zsh. Then close/reopen terminal.
-    ```
+Return to the **account page** of the client in [**Client Brief**](https://client-brief.platform.onclusive.org/).
+Changes in account configuration — especially in **sections** and their associated queries — can affect whether a match occurs.
 
-2.  **Install Node.js LTS:**
-    (Installs the latest Long Term Support version and sets it as default)
+For example, if the relevant query wasn’t attached to the section on the match date, the article wouldn't have matched.
 
-    ```bash
-    nvm install --lts
-    nvm alias default --lts
-    ```
-### 5\. Project Setup & Run
+Check the **History** tab of the account and look for changes before or after the match date.
 
-Finally, clone your project, install its dependencies, and run the Rails server.
+![Account History](https://raw.githubusercontent.com/dinabandhuchak/documentation/refs/heads/main/assets/Screenshot%202025-07-12%20103444.png)
 
-1.  **Navigate to Project Directory & Clone:**
+*(In the screenshot, we can see that the **WILL AID** section — where the query was attached — was last updated on 12-06-2025, which is before the match date of 16-06-2025.)*
 
-    ```bash
-    cd ~/projects # Or your preferred development directory
-    git clone your_project_repo_url # Replace with your project's Git URL
-    cd green-lantern
-    ```
+---
 
-2.  **Install Dependencies:**
+### 🔗 Related Tickets:
 
-    ```bash
-    bundle install # Installs Ruby gems defined in Gemfile.lock
-    npm install    # Installs Node.js packages if your project has a package.json (e.g., for Rails assets)
-    ```
-
-3.  **Docker Setup:**
-
-    ```bash
-    sudo docker compose up -d
-    ```
-
-4.  **DB setup:**
-
-    ```bash
-    bin/rails db:drop && bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
-    bin/rails s -p 4100
-    ```
-
-    Access your application from your Windows browser at `http://localhost:4100`. Keep the terminal window open where `rails s` is running. Press `Ctrl + C` to stop the server.
+* [THD-11523](https://onclusive.atlassian.net/browse/THD-11523)
+* [THD-11460](https://onclusive.atlassian.net/browse/THD-11460)
+* [THD-12272](https://onclusive.atlassian.net/browse/THD-12272)
+* [THD-12201](https://onclusive.atlassian.net/browse/THD-12201)
+* [THD-12140](https://onclusive.atlassian.net/browse/THD-12140)
+* [THD-12004](https://onclusive.atlassian.net/browse/THD-12004)
+* [THD-12003](https://onclusive.atlassian.net/browse/THD-12003)
+* [THD-11810](https://onclusive.atlassian.net/browse/THD-11810)
+* [THD-11524](https://onclusive.atlassian.net/browse/THD-11524)
+* [THD-11386](https://onclusive.atlassian.net/browse/THD-11386)
