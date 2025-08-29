@@ -156,3 +156,22 @@ Users can paste these URLs into the system to begin monitoring.
 * Show when tokens were added and how many days since.
 * Provide a **refresh button** for tokens.
 * Display error messages for invalid/unsupported sources.
+
+
+---
+
+## API Quotas and Rate Limits Across Social Platforms
+
+| Platform        | Quota Type                      | Limits                                                                                                               |
+| --------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| **Instagram**   | Hashtag Limit                   | Max **30 unique hashtags** per Business/Creator account per 7-day rolling period                                     |
+|                 | API Call Rate Limit             | \~**200 calls/hour** per user + app combo                                                                            |
+| **Facebook**    | Page-Level Rate Limit           | Calls limited **per Page**, not just per app                                                                         |
+|                 | API Call Limits                 | \~**200 calls/user/hour**, \~**600 calls/app/min**; monitor with `X-App-Usage` headers                               |
+| **YouTube**     | Daily Quota (Units)             | **10,000 units/day** per project                                                                                     |
+|                 | Unit Costs per Method           | Varies: e.g., `search.list` = 100 units, `videos.insert` = 1600 units                                                |
+|                 | Rate Limits (Burst Control)     | Hidden **per-second quotas** may throttle even if daily quota remains                                                |
+| **Twitter (X)** | Rate Limits (per 15-min window) | Varies by **plan** (Free, Basic, Pro, Enterprise). Example: Basic plan → **180 requests/15 min** for standard search |
+|                 | Monthly Tweet Cap               | Depends on plan. Example: Basic → **500K tweets/month** (read + write combined)                                      |
+|                 | Access Scope                    | Limits apply at the **app level** (all users of the app share the quota)                                             |
+
