@@ -144,7 +144,11 @@ Finally, clone your project, install its dependencies, and run the Rails server.
 
     ```bash
     bin/rails db:drop && bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
-    bin/rails s -p 4100
     ```
+    
+5. **Start Application:**
+   ```bash
+   bin/rails s -p 4100
+   ```
 
     Access your application from your Windows browser at `http://localhost:4100`. Keep the terminal window open where `rails s` is running. Press `Ctrl + C` to stop the server.
