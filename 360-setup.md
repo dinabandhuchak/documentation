@@ -143,7 +143,7 @@ Finally, clone your project, install its dependencies, and run the Rails server.
 4.  **DB setup:**
 
     ```bash
-    bin/rails db:drop && bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
+    bin/rails db:drop && bin/rails db:create && bin/rails db:migrate && bin/rails db:seed && bin/rails features:manage
     ```
     
 5. **Start Application:**
