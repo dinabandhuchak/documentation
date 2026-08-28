@@ -180,7 +180,7 @@ Individual applications can still call the Middleware APIs to update user record
 
 Therefore, when a user navigates to GUM, they will see the latest user and access information stored in Auth0.
 
-![Relations Diagram](assets/GUM.png)
+![GUM](assets/GUM.png)
 
 
 ---
@@ -288,3 +288,4 @@ Supporting this structure would require Contracts to be assigned directly to Cli
 
 The `featureOverrides` field exists on the Client model, but this functionality is currently reserved for a future implementation.
 
+![CLAIM](assets/CLAIM.png)
