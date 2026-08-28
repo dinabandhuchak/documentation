@@ -288,4 +288,4 @@ Supporting this structure would require Contracts to be assigned directly to Cli
 
 The `featureOverrides` field exists on the Client model, but this functionality is currently reserved for a future implementation.
 
-![CLAIM](assets/CLAIM.png)
+![CLAIM](assets/CLIAM.png)
