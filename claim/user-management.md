@@ -294,9 +294,6 @@ The `featureOverrides` field exists on the Client model, but this functionality 
 ---
 
 ## References & Sources
-
-This documentation was derived from the following specification documents and codebases:
-
 * **Source Code Repository:** [`gum/claim` Repository](https://github.com/AirPR/gum/tree/claim)
 * **Related Documentation:**
   * [Onclusive Auth0 Integration & Overview](https://onclusive.atlassian.net/wiki/spaces/Applicatio/pages/5027102781/Onclusive+Auth0+Integration+Overview)
