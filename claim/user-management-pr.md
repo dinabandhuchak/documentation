@@ -181,3 +181,110 @@ Individual applications can still call the Middleware APIs to update user record
 Therefore, when a user navigates to GUM, they will see the latest user and access information stored in Auth0.
 
 ![Relations Diagram](assets/GUM.png)
+
+
+---
+
+# Client, Account, and Identity Management (CLAIM)
+
+CLAIM stands for **Client, Account, and Identity Management**. It extends GUM with a local data model for managing customer organizations, business units, user identities, contracts, features, and application access.
+
+## Main Components
+
+* **Account:** Represents a customer organization.
+* **Client:** Represents a business unit, workspace, or brand within an Account.
+* **User:** Represents an individual who accesses Onclusive applications.
+* **Contract:** Defines the features and application access purchased by an Account.
+* **Feature:** Represents a capability provided through a Contract.
+* **Application Grant:** Represents access to a specific Onclusive application.
+
+## How They Relate
+
+```text
+Account
+ ├── Clients
+ │    └── Users
+ │
+ └── Contracts
+      └── Features
+           └── Application Grants
+```
+
+Contracts belong to **Accounts**, not directly to Clients. Therefore, all Clients under the same Account have access to the features provided by that Account's Contracts.
+
+A User can belong to multiple Clients, but those Clients must belong to the same Account.
+
+## Access Flow
+
+```text
+User
+  -> Client
+  -> Account
+  -> Contract
+  -> Enabled Feature
+  -> Application Grant
+  -> Auth0 Application Access
+```
+
+GUM calculates a User's effective application access based on the Account's Contracts and their enabled Features. It then synchronizes the applicable application grants with Auth0.
+
+## CLAIM and Auth0
+
+* **CLAIM database:** Stores Accounts, Clients, Users, Contracts, Features, User relationships, and audit history.
+* **Auth0:** Manages authentication, passwords, identities, roles, MFA, and application access.
+* **Both systems:** Store the User's name and email address, which must remain synchronized.
+
+The local CLAIM User is linked to Auth0 using `auth0UserId`. CLAIM also stores its local User ID in Auth0 as `user_metadata.gum_user_id`.
+
+## Application Synchronization
+
+When relevant data changes in GUM, such as a User, Account, Client, Contract, Feature, or application grant, GUM can send webhook events to affected integrated applications. Those applications then update their local shadow records asynchronously.
+
+## Example
+
+Suppose an Account has two Clients and two Contracts:
+
+```text
+Account: Acme Corporation
+
+ ├── Client 1
+ │    └── User A
+ │
+ ├── Client 2
+ │    └── User B
+ │
+ ├── Contract A
+ │    └── Feature A
+ │
+ └── Contract B
+      └── Feature B
+```
+
+In the current CLAIM model, Contracts belong to the **Account**, not directly to individual Clients.
+
+Therefore:
+
+* User A is assigned to Client 1.
+* User B is assigned to Client 2.
+* Client 1 and Client 2 both belong to Acme Corporation.
+* Contract A and Contract B are both assigned to Acme Corporation.
+* Both users have access to the features provided by both Contracts.
+
+```text
+User A -> Feature A and Feature B
+
+User B -> Feature A and Feature B
+```
+
+The current model does **not** support the following structure:
+
+```text
+Client 1 -> Contract A -> User A gets Feature A
+
+Client 2 -> Contract B -> User B gets Feature B
+```
+
+Supporting this structure would require Contracts to be assigned directly to Clients, or for Client-level feature overrides to be fully implemented.
+
+The `featureOverrides` field exists on the Client model, but this functionality is currently reserved for a future implementation.
+
