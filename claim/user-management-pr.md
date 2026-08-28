@@ -179,3 +179,5 @@ GUM sends webhook events to applications for the following types of changes:
 Individual applications can still call the Middleware APIs to update user records directly, as **Auth0 is the single source of truth for central user identity and application access**.
 
 Therefore, when a user navigates to GUM, they will see the latest user and access information stored in Auth0.
+
+![Relations Diagram](assets/GUM.png)
