@@ -290,6 +290,45 @@ The `featureOverrides` field exists on the Client model, but this functionality 
 
 ![CLAIM](assets/CLIAM.png)
 
+---
+
+_Note_:
+**Webhook payload**:
+  ```json
+{
+  "schemaVersion": 1,
+  "eventId": "9f3b2e67-4e58-4fcd-a2d3-9cc3a1c9e3b0",
+  "event": "user.created",
+  "sequence": 12345,
+  "occurredAt": "2026-04-30T17:22:11.804Z",
+  "entity": {
+    "type": "user",
+    "id": 42
+  },
+  "ids": {
+    "gum_user_id": 42,
+    "gum_client_id": 17,
+    "gum_account_id": 9,
+    "gum_contract_id": 5
+  },
+  "applicationGrants": [
+    "unified",
+    "pro"
+  ],
+  "data": {
+    "email": "alice@example.com",
+    "name": "Alice"
+  },
+  "changes": {
+    "name": {
+      "from": "Alice",
+      "to": "Alice S."
+    }
+  },
+  "replayOf": "original-event-id"
+}
+  ```
+
 
 ---
 
